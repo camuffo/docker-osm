@@ -1,5 +1,5 @@
-FROM golang:1.16.0-buster as mother
-MAINTAINER Asdrubal Gonzalez <asdrubal.gonzalez@geo-solutions.it>
+FROM golang:1.23-bookworm AS mother
+LABEL maintainer="Asdrubal Gonzalez <asdrubal.gonzalez@geo-solutions.it>"
 
 WORKDIR /code
 #Install the tool for merging the PBF files.
@@ -9,8 +9,8 @@ COPY ./*.pbf /code/
 RUN osmium merge *.pbf -o /code/region/region-latest.osm.pbf
 
 # Final Image.
-FROM golang:1.16.0-buster
-MAINTAINER Asdrubal Gonzalez <asdrubal.gonzalez@geo-solutions.it>
+FROM golang:1.23-bookworm
+LABEL maintainer="Asdrubal Gonzalez <asdrubal.gonzalez@geo-solutions.it>"
 
 RUN apt update && apt install -y python3-pip \
       #Setuptools python package added
@@ -22,7 +22,7 @@ RUN apt update && apt install -y python3-pip \
 RUN ln -s /usr/lib/libgeos_c.so /usr/lib/libgeos.so
 
 WORKDIR $GOPATH
-RUN go get github.com/tools/godep
+RUN go install github.com/tools/godep@latest
 RUN git clone https://github.com/omniscale/imposm3 src/github.com/omniscale/imposm3
 RUN cd src/github.com/omniscale/imposm3 && make update_version && go install ./cmd/imposm/
 
