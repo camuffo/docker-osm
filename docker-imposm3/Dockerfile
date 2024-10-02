@@ -28,7 +28,8 @@ RUN cd src/github.com/omniscale/imposm3 && make update_version && go install ./c
 
 # Preparing everything for the importer.
 ADD requirements.txt /home/requirements.txt
-RUN pip3 install -r /home/requirements.txt
+# RUN pip3 install -r /home/requirements.txt
+RUN apt install python3-psycopg2
 ADD importer.py /home/
 
 # Add YAML Mapping file
