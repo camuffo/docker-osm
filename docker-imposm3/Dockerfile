@@ -1,5 +1,5 @@
 FROM golang:1.23-bookworm AS mother
-LABEL maintainer="Asdrubal Gonzalez <asdrubal.gonzalez@geo-solutions.it>"
+LABEL maintainer="GeoSolutions <info@geosolutionsgroup.com>"
 
 WORKDIR /code
 #Install the tool for merging the PBF files.
@@ -10,7 +10,7 @@ RUN osmium merge *.pbf -o /code/region/region-latest.osm.pbf
 
 # Final Image.
 FROM golang:1.23-bookworm
-LABEL maintainer="Asdrubal Gonzalez <asdrubal.gonzalez@geo-solutions.it>"
+LABEL maintainer="GeoSolutions <info@geosolutionsgroup.com>"
 
 RUN apt update && apt install -y python3-pip \
     #Setuptools python package added
